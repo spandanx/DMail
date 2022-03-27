@@ -16,14 +16,31 @@ class ComposeMail extends Component {
 
   sendMail = async(event) => {
     event.preventDefault();
+    let date = (new Date()).getTime();
+    let currentTimestamp = date;
+    
     const accounts = await web3.eth.getAccounts();
     console.log("calling sendmail");
 
     let toAddresses = this.state.to.split(";");
+    let ccAddresses = this.state.cc.split(";");
+    let bccAddresses = this.state.bcc.split(";");
     console.log("Subject: "+this.state.subject);
     console.log("Body: "+this.state.body);
-    console.log("To: "+toAddresses);
-    await AccountManager.methods.sendMail(toAddresses, this.state.subject, this.state.body).send({
+    console.log("currentTimestamp: "+currentTimestamp);
+    console.log("toAddresses: "+toAddresses);
+    console.log("ccAddresses: "+ccAddresses);
+    console.log("bccAddresses: "+bccAddresses);
+    // console.log("To: "+toAddresses);
+    //string calldata subject, string calldata body, uint timestamp,
+    // string memory typeOfMail, address referenceMail,
+    // address[] memory to, address[] memory cc, address[] memory bcc
+    // await AccountManager.methods.sendMail(toAddresses, this.state.subject, this.state.body).send({
+    //   from: accounts[0]
+    // });
+    await AccountManager.methods.sendMail(this.state.subject, this.state.body, currentTimestamp,
+      "Dummy", "0x0000000000000000000000000000000000000000", 
+      toAddresses, ccAddresses, bccAddresses).send({
       from: accounts[0]
     });
     console.log("mail sent");

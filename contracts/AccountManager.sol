@@ -3,20 +3,58 @@ pragma solidity ^0.8.12;
 
 // import {DMail} from "dmail.sol";
 contract MailObj{
-    struct Mail{
+    struct MailBasic{
         string subject;
+        uint timestamp;
+        string body;
+        address mailAddress;
+    }
+    struct MailAdvanced{
         address[] to;
         address[] cc;
         address[] bcc;
-        string body;
+        string typeOfMail;
         address referenceMail;
+        address from;
     }
-    Mail mail;
-    constructor(string memory subject, address[] memory to, address[] memory cc, address[] memory bcc, string memory body, address referenceMail) {
-        mail = Mail({subject:subject, to:to, cc:cc, bcc:bcc, body:body, referenceMail:referenceMail});
+
+    // address[] _to;
+    // address[] _cc;
+    // address[] _bcc;
+    // string _typeOfMail;
+    // address _referenceMail;
+    // address _from;
+    
+    MailBasic _mailBasic;
+    MailAdvanced _mailAdvanced;
+
+    constructor(string memory subject, string memory body, uint timestamp) {
+        _mailBasic = MailBasic({subject:subject, body:body, timestamp:timestamp, mailAddress:address(this)});
     }
-    function getMail() public view returns(Mail memory){
-        return mail;
+    function setAdvanced(string memory typeOfMail, address referenceMail, address from, address[] memory to, address[] memory cc, address[] memory bcc) public{
+        // _typeOfMail = typeOfMail;
+        // _referenceMail = referenceMail;
+        // _from = from;
+        // _to = to;
+        // _cc = cc;
+        // _bcc = bcc;
+        _mailAdvanced = MailAdvanced({typeOfMail:typeOfMail, referenceMail:referenceMail, from:from, to:to, cc:cc, bcc:bcc});
+    }
+    // function setTo(address[] memory to) public{
+    //     _to = to;
+    // }
+    // function setCc(address[] memory cc) public{
+    //     _cc = cc;
+    // }
+    // function setBcc(address[] memory bcc) public{
+    //     _bcc = bcc;
+    // }
+
+    function getMailBasic() public view returns(MailBasic memory){
+        return _mailBasic;
+    }
+    function getMailAdvanced() public view returns(MailAdvanced memory){
+        return _mailAdvanced;
     }
 }
 
@@ -24,6 +62,7 @@ contract MailAccount{
     address private _address;
     address[] public sent;
     address[] public recieved;
+    // mapping(address=>)
 
     constructor() {
         _address = tx.origin;
@@ -33,7 +72,7 @@ contract MailAccount{
         recieved.push(mail);
     }
 
-    function addSendMail(address mail) public{
+    function addSentMail(address mail) public{
         sent.push(mail);
     }
     function getSentMails() public view returns(address[] memory){
@@ -57,6 +96,11 @@ contract AccountManager {
         arr.push(accounts[addr]);
     }
 
+    function checkIfAccountExists() public view returns(bool){
+        address sender = tx.origin;
+        return (address(accounts[sender])!=address(0));
+    }
+
     // function check(address addr) public view returns(address){
     //     return address(accounts[addr]);
     // }
@@ -71,40 +115,43 @@ contract AccountManager {
 
     // }
     //pagination to be done
-    function getSentMail() public view returns(MailObj.Mail[] memory){
+    function getSentMailBasic() public view returns(MailObj.MailBasic[] memory){
         address addr = msg.sender;
         require(address(accounts[addr])!=address(0), "instance not found at given address");
         address[] memory mailAddresses = accounts[addr].getSentMails();
-        MailObj.Mail[] memory mailArray = new MailObj.Mail[](mailAddresses.length);
+        MailObj.MailBasic[] memory mailArray = new MailObj.MailBasic[](mailAddresses.length);
         for (uint i = 0; i<mailAddresses.length; i++){
-            mailArray[i] = mails[mailAddresses[i]].getMail();
+            mailArray[i] = mails[mailAddresses[i]].getMailBasic();
         }
         return mailArray;
     }
     //pagination to be done
-    function getRecievedMail() public view returns(MailObj.Mail[] memory){
+    function getRecievedMailBasic() public view returns(MailObj.MailBasic[] memory){
         address addr = msg.sender;
         require(address(accounts[addr])!=address(0), "instance not found at given address");
         address[] memory mailAddresses = accounts[addr].getRecievedMails();
-        MailObj.Mail[] memory mailArray = new MailObj.Mail[](mailAddresses.length);
+        MailObj.MailBasic[] memory mailArray = new MailObj.MailBasic[](mailAddresses.length);
         for (uint i = 0; i<mailAddresses.length; i++){
-            mailArray[i] = mails[mailAddresses[i]].getMail();
+            mailArray[i] = mails[mailAddresses[i]].getMailBasic();
         }
         return mailArray;
     }
-    function getSentMailAddresses() public view returns(address[] memory){
-        address sender = msg.sender;
-        require(address(accounts[sender])!=address(0), "Sender not found");
-        return accounts[sender].getSentMails();
-    }
+    // function getSentMailAddresses() public view returns(address[] memory){
+    //     address sender = msg.sender;
+    //     require(address(accounts[sender])!=address(0), "Sender not found");
+    //     return accounts[sender].getSentMails();
+    // }
 
-    function getRecievedMailAddresses() public view returns(address[] memory){
-        address sender = msg.sender;
-        require(address(accounts[sender])!=address(0), "Sender not found");
-        return accounts[sender].getRecievedMails();
-    }
+    // function getRecievedMailAddresses() public view returns(address[] memory){
+    //     address sender = msg.sender;
+    //     require(address(accounts[sender])!=address(0), "Sender not found");
+    //     return accounts[sender].getRecievedMails();
+    // }
 
-    function sendMail(address[] calldata to, string calldata subject, string calldata body) public{
+    function sendMail(string calldata subject, string calldata body, uint timestamp,
+            string memory typeOfMail, address referenceMail,
+            address[] memory to, address[] memory cc, address[] memory bcc
+            ) public{
         address sender = msg.sender;
         require(address(accounts[sender])!=address(0), "Sender not found");
         // string message = string(bytes.concat(bytes("Reciever address"), "-", bytes(" not found")));
@@ -114,23 +161,34 @@ contract AccountManager {
             require(address(accounts[to[i]])!=address(0), string(abi.encodePacked("Reciever address", abi.encodePacked(sender), " not found")));
         }
         // DMail.Mail memory mail = DMail.Mail({body: message});
-        address[] memory cc;
-        address[] memory bcc;
-        MailObj mail = new MailObj({subject: subject, to:to, cc:cc, bcc:bcc, body: body, referenceMail:address(0)});
+        // address[] memory cc;
+        // address[] memory bcc;
+        MailObj mail = new MailObj({subject: subject, body: body, timestamp:timestamp});//to:to, cc:cc, bcc:bcc, referenceMail:address(0)
+        mail.setAdvanced({typeOfMail:typeOfMail, referenceMail:referenceMail, from:sender, to:to, cc:cc, bcc:bcc});
         mails[address(mail)] = mail;
         // address mailAddress = address(mail);
-        accounts[sender].addSendMail(address(mail));
+        accounts[sender].addSentMail(address(mail));
         for (uint i = 0; i<to.length; i++){
             accounts[to[i]].addRecievedMail(address(mail));
         }
+        for (uint i = 0; i<cc.length; i++){
+            accounts[cc[i]].addRecievedMail(address(mail));
+        }
+        for (uint i = 0; i<bcc.length; i++){
+            accounts[bcc[i]].addRecievedMail(address(mail));
+        }
+
     }
 
 
     // function checkIfValidAccountAddress(address addr) public view returns(bool){
     //     return (address(accounts[addr])!=address(0));
     // }
-    function getMailByAddress (address addr) public view returns (MailObj.Mail memory){
-        return mails[addr].getMail();
+    function getMailBasicByAddress (address addr) public view returns (MailObj.MailBasic memory){
+        return mails[addr].getMailBasic();
+    }
+    function getMailAdvancedByAddress (address addr) public view returns (MailObj.MailAdvanced memory){
+        return mails[addr].getMailAdvanced();
     }
     function getAllAccounts() public view returns (MailAccount[] memory){
         return arr;

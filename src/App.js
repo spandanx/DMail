@@ -5,11 +5,11 @@ import React from 'react';
 // import MailAccount from './MailAccount';
 import AccountManager from './AccountManager';
 import web3 from './web3';
-import MailList from './components/MailList';
+import MailList from './components/ViewMail/MailList';
 import LeftNavBar from './components/LeftNavBar';
 import TopNavBar from './components/TopNavBar';
 import ComposeMail from './components/ComposeMail';
-import ViewMail from './components/ViewMail';
+import ViewMail from './components/ViewMail/ViewMail';
 
 class App extends React.Component {
 
@@ -44,7 +44,7 @@ class App extends React.Component {
   fetchSentMail = async() => {
     console.log("SentMails");
     let accounts = await web3.eth.getAccounts();
-    let mails = await AccountManager.methods.getSentMail().call({
+    let mails = await AccountManager.methods.getSentMailBasic().call({
       from : accounts[0]
     });
     this.setState({sentMails: mails});
@@ -53,7 +53,7 @@ class App extends React.Component {
   fetchRecievedMail = async() => {
     console.log("RecievedMails");
     let accounts = await web3.eth.getAccounts();
-    let mails = await AccountManager.methods.getRecievedMail().call({
+    let mails = await AccountManager.methods.getRecievedMailBasic().call({
       from : accounts[0]
     });
     this.setState({recievedMails: mails});
@@ -85,9 +85,11 @@ class App extends React.Component {
         <div class="tab-pane fade w-100" id="v-pills-compose" role="tabpanel" aria-labelledby="v-pills-compose-tab">
           <ComposeMail></ComposeMail>
         </div>
-        <div class="tab-pane fade show active" id="v-pills-Inbox" role="tabpanel" aria-labelledby="v-pills-Inbox-tab">{this.state.recievedMails.map((item)=>(
+        <div class="tab-pane fade show active" id="v-pills-Inbox" role="tabpanel" aria-labelledby="v-pills-Inbox-tab">
+          {/* {this.state.recievedMails.map((item)=>(
           <MailList mail={item}></MailList>
-        ))}</div>
+        ))} */}
+        <MailList mail={this.state.recievedMails}></MailList></div>
         <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
         {/* {this.state.sentMails.map((item)=>(
           <MailList mail={item}></MailList>
