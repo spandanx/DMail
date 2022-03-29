@@ -10,11 +10,26 @@ class ViewMail extends Component {
     };
   }
 
+  getTime = (timestamp) => {
+
+    let d = new Date(parseInt(timestamp));
+    console.log("Date: "+timestamp);
+    let datestring = "";
+    
+    datestring = d.getDate()  + "-" + (d.getMonth()+1) + "-" + d.getFullYear() + " " +
+        d.getHours() + ":" + d.getMinutes();
+    //.toString().substring(2)
+    // 16-5-2015 9:50
+    return datestring;
+  }
+
   render() {
       this.state.mailBasic = this.props.mailBasic;
       this.state.mailAdvanced = this.props.mailAdvanced;
       console.log("OpenedMail");
       console.log(this.state.mailBasic);
+    //   console.log("hsitory: ");
+    //   console.log(this.props.history);
     return (
         <div class="container">
             <div class="row">
@@ -43,7 +58,7 @@ class ViewMail extends Component {
                                         </div>
                                     </div>
                                     <div class="col-md-4 text-right">
-                                        <p class="date"> 8:02 PM 12 FEB 2014</p>
+                                        <p class="date">{this.getTime(this.state.mailBasic.timestamp)}</p>
                                     </div>
                                     <div class="col-md-12">
                                         <h4> {this.state.mailBasic.subject}</h4>
@@ -54,8 +69,8 @@ class ViewMail extends Component {
                                     <div class="row">
                                         <div class="col-md-12">
                                             {/* <img alt="" src="https://bootdey.com/img/Content/avatar/avatar6.png"/> */}
-                                            <strong>John Doe </strong>
-                                            <span>[johndoe@gmail.com] </span>
+                                            <strong>{"<"+this.state.mailAdvanced.from+">"}</strong>
+                                            <span> </span>
                                             <div>
                                                 to
                                                 <strong> me</strong>

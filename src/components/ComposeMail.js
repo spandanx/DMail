@@ -22,9 +22,10 @@ class ComposeMail extends Component {
     const accounts = await web3.eth.getAccounts();
     console.log("calling sendmail");
 
-    let toAddresses = this.state.to.split(";");
-    let ccAddresses = this.state.cc.split(";");
-    let bccAddresses = this.state.bcc.split(";");
+    let toAddresses = !this.state.to ? [] : this.state.to.split(',');
+    let ccAddresses = !this.state.cc ? [] : this.state.cc.split(',');
+    let bccAddresses = !this.state.bcc ? [] : this.state.bcc.split(',');
+
     console.log("Subject: "+this.state.subject);
     console.log("Body: "+this.state.body);
     console.log("currentTimestamp: "+currentTimestamp);

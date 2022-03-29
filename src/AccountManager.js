@@ -1,7 +1,7 @@
 import web3 from './web3';
 // const { abi, evm } = require('./compile');
 
-const address = "0xce5aD2655A502856103613478f74747138F18fB6";//"0x2e87c1424D77e63DA756bEb2E46AA036D9C47E58";
+const address = "0xD54F9c0D4DE8868F715ebf03D5108B909025fF38";
 
 console.log(address);
 
@@ -181,7 +181,42 @@ const abi =
 		"type": "function"
 	},
 	{
-		"inputs": [],
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "pageSize",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "pageNumber",
+				"type": "uint256"
+			}
+		],
+		"name": "getRecievedMailAddresses",
+		"outputs": [
+			{
+				"internalType": "address[]",
+				"name": "",
+				"type": "address[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "pageSize",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "pageNumber",
+				"type": "uint256"
+			}
+		],
 		"name": "getRecievedMailBasic",
 		"outputs": [
 			{
@@ -217,6 +252,30 @@ const abi =
 	},
 	{
 		"inputs": [],
+		"name": "getRecievedMailLength",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "pageSize",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "pageNumber",
+				"type": "uint256"
+			}
+		],
 		"name": "getSentMailBasic",
 		"outputs": [
 			{
@@ -245,6 +304,19 @@ const abi =
 				"internalType": "struct MailObj.MailBasic[]",
 				"name": "",
 				"type": "tuple[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getSentMailLength",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
 			}
 		],
 		"stateMutability": "view",
