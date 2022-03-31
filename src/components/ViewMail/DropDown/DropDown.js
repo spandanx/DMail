@@ -34,24 +34,28 @@ class DropDown extends Component {
                         <td>from:</td>
                         <td>{this.props.mailAdvanced.from}</td>
                     </tr>
-                    <tr class="view-message">
-                        <td>To:</td>
-                        <td>{this.props.mailAdvanced.to?.map((item)=>(
-                            <span>{"<"+item+">"}</span>
-                        ))}</td>
-                    </tr>
-                    <tr class="view-message ">
-                        <td>Cc</td>
-                        <td>{this.props.mailAdvanced.cc?.map((item)=>(
-                            <span>{"<"+item+">"}</span>
-                        ))}</td>
-                    </tr>
-                    <tr class="view-message ">
+                    {this.props.mailAdvanced.to? 
+                        <tr class="view-message">
+                            <td>To:</td>
+                            <td>{this.props.mailAdvanced.to?.map((item)=>(
+                                <span>{"<"+item+">"}</span>
+                            ))}</td>
+                        </tr>
+                    : <></>}
+                    {this.props.mailAdvanced.cc? 
+                        <tr class="view-message ">
+                            <td>Cc</td>
+                            <td>{this.props.mailAdvanced.cc?.map((item)=>(
+                                <span>{"<"+item+">"}</span>
+                            ))}</td>
+                        </tr>
+                    : <></>}
+                    {/* <tr class="view-message ">
                         <td>Bcc</td>
                         <td>{this.props.mailAdvanced.bcc?.map((item)=>(
                             <span>{"<"+item+">"}</span>
                         ))}</td>
-                    </tr>
+                    </tr> */}
                     {/* <tr class="view-message  text-right">9:27 AM</tr> */}
                     {/* <tr class="view-message  text-right">to:        myemail@gmail.com</tr>
                     <tr class="view-message  text-right">date:      Date 26, 2022, 00 AM</tr>

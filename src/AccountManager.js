@@ -1,7 +1,7 @@
 import web3 from './web3';
 // const { abi, evm } = require('./compile');
 
-const address = "0xD54F9c0D4DE8868F715ebf03D5108B909025fF38";
+const address = "0x77c61d388EcA9fc021Cd6551c2Eb91f6230a0489";
 
 console.log(address);
 
@@ -258,6 +258,30 @@ const abi =
 				"internalType": "uint256",
 				"name": "",
 				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "pageSize",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "pageNumber",
+				"type": "uint256"
+			}
+		],
+		"name": "getSentMailAddresses",
+		"outputs": [
+			{
+				"internalType": "address[]",
+				"name": "",
+				"type": "address[]"
 			}
 		],
 		"stateMutability": "view",
