@@ -39,6 +39,7 @@ const MailList = (props) => {
   //       this.setState({opacity: ""});
   //       console.log(this.state.openedMail);
   // }
+
   useEffect(() => {
       console.log("useEffect() props.mailType called");
       setmailType(props.mailType);
@@ -248,8 +249,8 @@ const MailList = (props) => {
                   </td>
                   <td class="inbox-small-cells"><i class="fa fa-star"></i></td>
                   <td class="view-message  dont-show fw-bold">{item.subject}</td>
-                  <td class="view-message ">{item.body}</td>
-                  <td class="view-message  text-right">{getTime(item.timestamp)}</td>
+                  <td class="view-message">{item.body}</td>
+                  <td class="view-message text-right">{getTime(item.timestamp)}</td>
               </tr>
               )) : <></>}
           </tbody>

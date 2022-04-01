@@ -18,6 +18,7 @@ import DraftsComponent from './components/Mail/Drafts';
 import OutboxComponent from './components/Mail/Outbox';
 // import HomeComponent from './components/Home';
 import NavigateButtonComponent from './components/NavigateButtonComponent';
+import Login from './components/Login';
 // import { useState } from "react";
 
 import {
@@ -34,7 +35,7 @@ function App() {
   // const navigate = useNavigate();
 
   const tabs = [0,1,2,3,4];
-  const paths = ["/compose","/inbox","/sent","/drafts","/outbox"];
+  const paths = ["/mail/compose","/mail/inbox","/mail/sent","/mail/drafts","/mail/outbox"];
   const texts = ["Compose","Inbox","Sent","Drafts","Outbox"];
 
 //   constructor(props) {
@@ -128,12 +129,13 @@ function App() {
       </div>
       <Routes>
           {/* <Route path="/" element={<HomeComponent />}/> */}
-          <Route path="/compose" element={<ComposeMail />}/>
-          <Route path="/inbox" element={<InboxComponent />}/>
-          <Route path="/sent" element={<SentComponent />}/>
-          <Route path="/drafts" element={<DraftsComponent />}/>
-          <Route path="/outbox" element={<OutboxComponent />}/>
-          <Route path="/view-mail" element={<ViewMail/>} />
+          <Route path="/login" element={<Login />}/>
+          <Route path="/mail/compose" element={<ComposeMail />}/>
+          <Route path="/mail/inbox" element={<InboxComponent />}/>
+          <Route path="/mail/sent" element={<SentComponent />}/>
+          <Route path="/mail/drafts" element={<DraftsComponent />}/>
+          <Route path="/mail/outbox" element={<OutboxComponent />}/>
+          <Route path="/mail/view-mail" element={<ViewMail/>} />
           {/* <Route path="/">
             <Users />
           </Route> */}

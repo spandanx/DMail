@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { useNavigate } from "react-router-dom";
 
 // function getSessionStorageOrDefault(key, defaultValue) {
@@ -11,12 +11,21 @@ import { useNavigate } from "react-router-dom";
 
 function NavigateButtonComponent(props) {
 
+  console.log("props");
+  console.log(props);
+  console.log("sessionStorage");
+  console.log(sessionStorage.getItem('activeTab'));
+  
+
     const navigate = useNavigate();
     
 
-    // const [activeTab, setActiveTab] = React.useState(getSessionStorageOrDefault('activeTab', 0));
+    // const [activeTab, setActiveTab] = React.useState();
     const [activeTab, setActiveTab] = React.useState(-1);
 
+    useEffect(() => {
+      setActiveTab(sessionStorage.getItem('activeTab'));
+    },[sessionStorage.getItem('activeTab')]);
     // const getActiveTab = () => {
     //     console.log("In session:");
     //     console.log(sessionStorage.getItem("activeTab"));
@@ -24,13 +33,15 @@ function NavigateButtonComponent(props) {
     // }
 
     const goToPage = (path, index) => {
-        // sessionStorage.setItem("activeTab", index);
+        sessionStorage.setItem("activeTab", index);
+        // console.log("activeTab");
+        // console.log(sessionStorage.getItem("activeTab"));
         // setActiveTab(index);
         navigate(path, {state: {mno:"abc"}});
     }
 
   return (
-    <button onClick={() => goToPage(props.path, props.index)} class={"nav-link " + (activeTab===props.index ? 'active' : '')} id="v-pills-Inbox-tab" data-bs-toggle="pill" data-bs-target="#v-pills-Inbox" type="button" role="tab" aria-controls="v-pills-Inbox" aria-selected="true">{props.text}</button>
+    <button onClick={() => goToPage(props.path, props.index)} class={"nav-link " + (activeTab==props.index ? 'active' : '')} id="v-pills-Inbox-tab" data-bs-toggle="pill" data-bs-target="#v-pills-Inbox" type="button" role="tab" aria-controls="v-pills-Inbox" aria-selected="true">{props.text}</button>
   )
 }
 

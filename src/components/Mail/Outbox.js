@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { useLocation } from "react-router-dom";
 
 function OutboxComponent(props) {
@@ -9,6 +9,10 @@ function OutboxComponent(props) {
   // const par = useParams();
   // console.log("PARAMS: ");
   // console.log(par);
+
+  useState(() => {
+    sessionStorage.setItem("activeTab", 4);
+  });
 
   return (
     <h4>Outbox coming soon..</h4>

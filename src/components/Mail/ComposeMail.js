@@ -28,11 +28,14 @@ const ComposeMail = (props) => {
   const [referenceMail, setReferenceMail] = useState("0x0000000000000000000000000000000000000000");
 
   useEffect(() => {
+    sessionStorage.setItem("activeTab", 0);
     console.log("Mail Provided");
-    setSubject(props.mail.subject);
-    setCc(props.mail.cc? props.mail.cc.join("; ") : '');
-    setTo(props.mail.to? props.mail.to.join("; ") : '');
-    setReferenceMail(props.mail.referenceMail);
+    if (props && props.mail){
+      setSubject(props.mail.subject? props.mail.subject : '');
+      setCc(props.mail.cc? props.mail.cc.join("; ") : '');
+      setTo(props.mail.to? props.mail.to.join("; ") : '');
+      setReferenceMail(props.mail.referenceMail ? props.mail.referenceMail: '');
+    }
 }, [props.mail]);
   
   const sendMail = async(event) => {

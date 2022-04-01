@@ -9,6 +9,7 @@ class InboxComponent extends Component {
   }
 
   render() {
+    sessionStorage.setItem("activeTab", 1);
     return (
         <MailList mailType={"Inbox"}/>
     );

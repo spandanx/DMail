@@ -9,6 +9,7 @@ class SentComponent extends Component {
   }
 
   render() {
+    sessionStorage.setItem("activeTab", 2);
     return (
         <MailList mailType={"Sent"}/>
     );

@@ -8,6 +8,7 @@ class DraftsComponent extends Component {
   }
 
   render() {
+    sessionStorage.setItem("activeTab", 3);
     return (
       <h4>Drafts coming soon..</h4>
     );

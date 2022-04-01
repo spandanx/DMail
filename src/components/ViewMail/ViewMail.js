@@ -5,6 +5,7 @@ import web3 from '../../web3';
 import ComposeMail from '../Mail/ComposeMail';
 import { useNavigate, useLocation } from "react-router-dom";
 import {BsArrowLeftCircleFill, BsTrashFill, BsFillReplyFill } from "react-icons/bs";
+import { BiRightArrowAlt, BiLeftArrowAlt } from "react-icons/bi";
 
 const ViewMail = (props) => {
 // class ViewMail extends Component {
@@ -154,6 +155,15 @@ const ViewMail = (props) => {
       setReplying(true);
   }
 
+  const enableForward = () => {
+    console.log("Toogling");
+    let mailDetails = {"subject":"FW: "+mailBasic.subject,
+                      "referenceMail": mailBasic.mailAddress
+                      };
+    setReplyMail(mailDetails);
+    setReplying(true);
+}
+
   const disableReply = () => {
     console.log("Toogling");
   setReplying(false);
@@ -176,7 +186,7 @@ const ViewMail = (props) => {
                                 <div class="col-md-8">
                                     <div class="compose-btn">
                                         {/* <a class="btn btn-sm btn-primary" href="mail_compose.html" data-original-title="" title="" onClick={console.log("back button clicked")}><i class="fa fa-back"></i> Back</a> */}
-                                        <span class="btn btn-sm btn-primary mx-1" onClick={()=>goback()}><BsArrowLeftCircleFill/> Back</span>
+                                        <span class="btn btn-sm btn-primary mx-1" onClick={()=>goback()}><BiLeftArrowAlt/> Back</span>
                                         {/* <button class="" data-original-title="" title="" ><i class="bi bi-arrow-left-circle-fill"></i></button> */}
                                         
                                         <button class="btn btn-sm btn-primary mx-1" data-original-title="" title="" onClick={()=>enableReply()}><BsFillReplyFill/> Reply</button>
@@ -213,9 +223,9 @@ const ViewMail = (props) => {
                             </div>
                             <div class="compose-btn pull-left">
                                 <a onClick={()=>enableReply()} class="btn btn-sm btn-primary" data-original-title="" title=""><BsFillReplyFill/> Reply</a>
-                                <button class="btn btn-sm " data-original-title="" title=""><i class="fa fa-arrow-right"></i> Forward</button>
-                                <button title="" data-placement="top" data-toggle="tooltip" type="button" data-original-title="Print" class="btn  btn-sm tooltips"><i class="fa fa-print"></i> </button>
-                                <button title="" data-placement="top" data-toggle="tooltip" data-original-title="Trash" class="btn btn-sm tooltips"><i class="fa fa-trash-o"></i></button>
+                                <button onClick={()=>enableForward()} class="btn btn-sm " data-original-title="" title=""><BiRightArrowAlt/> Forward</button>
+                                {/* <button title="" data-placement="top" data-toggle="tooltip" type="button" data-original-title="Print" class="btn  btn-sm tooltips"><i class="fa fa-print"></i> </button>
+                                <button title="" data-placement="top" data-toggle="tooltip" data-original-title="Trash" class="btn btn-sm tooltips"><i class="fa fa-trash-o"></i></button> */}
                             </div>
                             <div>
                                 {replying ? 
