@@ -1,7 +1,7 @@
 import React, { Component, useState, useEffect } from 'react';
 import web3 from '../../web3';
 import AccountManager from '../../AccountManager';
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const ComposeMail = (props) => {
 // class ComposeMail extends Component {
@@ -17,6 +17,8 @@ const ComposeMail = (props) => {
   //   };
   // }
   // const {state} = useLocation();
+  const navigate = useNavigate();
+
   console.log("ComposeMail props");
   console.log(props);
 
@@ -99,6 +101,10 @@ const ComposeMail = (props) => {
     // console.log("State");
     // console.log(this.state);
 
+    const goToInbox = () => {
+      navigate("/mail/inbox");
+    }
+
     return (
         <form class="form-horizontal container" role="form">
           {/* <p>Reference: {refernceMail}</p> */}
@@ -149,9 +155,9 @@ const ComposeMail = (props) => {
         <div class="form-group row my-3 justify-content-center">
           <div class="col-sm-12">
               {/* <div class="form-group"> */}
-                  <button type="submit" class="btn btn-success" onClick={sendMail}>Send</button>
-                  <button type="submit" class="btn btn-light">Draft</button>
-                  <button type="submit" class="btn btn-danger">Discard</button>
+                  <button type="submit" class="btn btn-success mx-1" onClick={sendMail}>Send</button>
+                  {/* <button type="submit" class="btn btn-light mx-1">Draft</button> */}
+                  <button type="submit" class="btn btn-danger mx-1" onClick={()=>goToInbox()}>Discard</button>
               {/* </div> */}
           {/* </div> */}
               </div>
