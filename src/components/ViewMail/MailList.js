@@ -130,7 +130,7 @@ const MailList = (props) => {
     // this.setState({openedMail:event});
     // console.log("calling viewMail()");
     // console.log(event);
-    navigate("/view-mail", {state: {mailAddress:event.mailAddress}});
+    navigate("/mail/view-mail", {state: {mailAddress:event.mailAddress}});
   }
 
   // const resetMail = async() => {
@@ -235,6 +235,9 @@ const MailList = (props) => {
     //   }
     return (
         <div>
+          {mailLength==0 && 
+          <h4>No mails found!</h4>
+          }
           {mailLength!=0 && mailList &&
             <ul class="pagination">
               {pages()}

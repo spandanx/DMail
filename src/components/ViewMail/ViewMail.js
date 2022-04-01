@@ -4,7 +4,7 @@ import AccountManager from '../../AccountManager';
 import web3 from '../../web3';
 import ComposeMail from '../Mail/ComposeMail';
 import { useNavigate, useLocation } from "react-router-dom";
-import {BsArrowLeftCircleFill, BsTrashFill, BsFillReplyFill } from "react-icons/bs";
+import {BsArrowLeftCircleFill, BsTrashFill, BsFillReplyFill, BsFillCaretDownFill, BsFillCaretUpFill } from "react-icons/bs";
 import { BiRightArrowAlt, BiLeftArrowAlt } from "react-icons/bi";
 
 const ViewMail = (props) => {
@@ -22,9 +22,13 @@ const ViewMail = (props) => {
     console.log(props);
     const [mailBasic, setMailBasic] = useState('');
     const [mailAdvanced, setMailAdvanced] = useState('');
-    const [rootMailAddress, setRootMailAddress] = useState('');
+    const [nestedBasicMails, setNestedBasicMails] = useState([]);
+    const [nestedAdvancedMails, setnestedAdvancedMails] = useState([]);
     const [mailAddress, setMailAddress] = useState('');
-    const [currentAccount, setCurrentAccount] = useState('');
+    const [expandAvailable, setExpandAvailable] = useState(false);
+    const [expandView, setExpandView] = useState(false);
+
+    // const [currentAccount, setCurrentAccount] = useState('');
     const [replying, setReplying] = useState(false);
     const [replyMail, setReplyMail] = useState({});
 
@@ -96,6 +100,56 @@ const ViewMail = (props) => {
     // return advancedDetails;
     // this.setState({mailAdvanced: advancedDetails});
     setMailAdvanced(advancedDetails);
+
+    if (advancedDetails.referenceMail!=="0x0000000000000000000000000000000000000000"){
+        setExpandAvailable(true);
+        fetchNestedMails(advancedDetails.referenceMail);
+    }
+  }
+
+  const fetchNestedMails = (address) => {
+      console.log("calling fetchNestedMails");
+      let basic = nestedBasicMails;
+      let advanced = nestedAdvancedMails;
+
+      let basicDetails = "";
+      AccountManager.methods.getMailBasicByAddress(address).call().then(function(response) {
+        console.log("HERE IS THE RESULT");
+        console.log(response);
+        // basicDetails = response;
+        basic.push(response);
+        setNestedBasicMails(basic);
+        
+      });
+      let advancedDetails = "";
+      AccountManager.methods.getMailAdvancedByAddress(address).call().then(function(response) {
+        console.log("HERE IS THE RESULT");
+        console.log(response);
+        // advancedDetails = response;
+        advanced.push(response);
+        setnestedAdvancedMails(advanced);
+        if (response.referenceMail!=="0x0000000000000000000000000000000000000000"){
+            fetchNestedMails(response.referenceMail);
+        }
+      });
+    //   basic.push(basicDetails);
+    //   advanced.push(advancedDetails);
+    //   setNestedBasicMails(basic);
+    //   setnestedAdvancedMails(advanced);
+      console.log("Nested basic: ");
+      console.log(basicDetails);
+    //   console.log(basic.body);
+      console.log("Nested advanced");
+      console.log(advancedDetails);
+    //   console.log(advanced.referenceMail);
+  }
+
+  const enableExpandView = () => {
+    setExpandView(true);
+  }
+
+  const disableExpandView = () => {
+    setExpandView(false);
   }
 
   const fetchAllReferencedMails = async(rootAddress) => {
@@ -169,6 +223,55 @@ const ViewMail = (props) => {
   setReplying(false);
 }
 
+const provideAllNestedMails = () => {
+    let toReturn = [];
+    for (let i = 0; i<nestedBasicMails.length; i++){
+        toReturn.push(getMailSubcomponent(nestedBasicMails[i], nestedAdvancedMails[i], 0));
+    }
+    return toReturn;
+}
+
+const getMailSubcomponent = (mailBasic, mailAdvanced, index) => {
+    if (mailBasic && mailAdvanced){
+    return (
+        <div class="border border-dark">
+        <div class="heading-inbox row my-4">
+                                <div class="col-md-4 text-end">
+                                    <p class="date">{getTime(mailBasic.timestamp)}</p>
+                                </div>
+                                <div class="col-md-12">
+                                    <h4> {mailBasic.subject}</h4>
+                                </div>
+                            </div>
+                            <hr/>
+                            <div class="sender-info">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <strong>{"<"+mailAdvanced?.from+">"}</strong>
+                                        <span> </span>
+                                        <div>
+                                            to
+                                            <strong> me</strong>
+                                            <DropDown mailBasic={mailBasic} mailAdvanced={mailAdvanced}></DropDown>
+                                        </div>
+                                        <a class="sender-dropdown " href="javascript:;">
+                                            <i class="fa fa-chevron-down"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="view-mail my-4">
+                                {mailBasic.body}
+                            </div>
+                            {/* <hr/> */}
+        </div>
+    );
+    }
+    else{
+        return (<></>);
+    }
+}
+
   const getMailComponent = (mailBasic, mailAdvanced, index) => {
       if (mailBasic && mailAdvanced){
     return (
@@ -235,6 +338,29 @@ const ViewMail = (props) => {
                                 </div>
                                 : ''}
                             </div>
+                            <div>
+                                {expandAvailable && 
+                                <div class="border border-dark my-3">
+                                    {!expandView ? 
+                                    <button onClick={()=>enableExpandView()} class="btn btn-sm btn-primary float-end" data-original-title="" title=""><BsFillCaretDownFill/> View mail chain</button>
+                                    : 
+                                    <button onClick={()=>disableExpandView()} class="btn btn-sm btn-primary float-end" data-original-title="" title=""><BsFillCaretUpFill/> Hide mail chain</button>
+                                    }
+                                    {expandView ? 
+                                    // getMailSubcomponent(nestedBasicMails[0], nestedAdvancedMails[0], 0)
+                                    provideAllNestedMails()
+                                    : 
+                                    <></>
+                                    }
+                                    {/* {getMailSubcomponent(nestedBasicMails[0], nestedAdvancedMails[0], 0)} */}
+                                    </div>
+                                }
+                                
+                                    {/* <button onClick={()=>disableReply()} class="btn btn-sm btn-danger float-end" data-original-title="" title=""><BsTrashFill/> Delete</button>
+                                    <ComposeMail mail={replyMail}/>
+                                
+                                : ''} */}
+                            </div>
                         </div>
                     </aside>
                     </div>
@@ -273,7 +399,17 @@ const ViewMail = (props) => {
     // if (this.state.mailBasic.length>0 && this.state.mailAdvanced.length>0){
         return (
             <>
-            {getMailComponent(mailBasic, mailAdvanced, 0)}
+                {/* <tr> */}
+                    {getMailComponent(mailBasic, mailAdvanced, 0)}
+                {/* </tr>
+                <br/> */}
+                {/* <tr class = "border border-dark w-75 p-3">
+                    <div>
+                    {nestedBasicMails.length>0 && nestedAdvancedMails.length>0 && 
+                        getMailSubcomponent(nestedBasicMails[0], nestedAdvancedMails[0], 0)
+                    }
+                    </div>
+                </tr> */}
             </>
         );
     // }
