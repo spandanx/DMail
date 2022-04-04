@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import web3 from '../web3';
 import { useNavigate } from "react-router-dom";
+import AccountManager from '../AccountManager';
 import {BsCaretRightFill} from "react-icons/bs";
 
 const Login = () => {
@@ -8,12 +9,23 @@ const Login = () => {
     const navigate = useNavigate();
 
     const [currentAddress, setCurrentAddress] = useState('');
+    const [validAccount, setValidAccount] = useState(false);
 
     const getAccount = async() => {
         let accounts = await web3.eth.getAccounts();
         console.log("accounts");
         console.log(accounts);
         setCurrentAddress(accounts[0]);
+        checkIfExists(accounts[0]);
+    }
+
+    const checkIfExists = async(account) => {
+        let response = await AccountManager.methods.checkIfAccountExists().call({
+            from: account
+        });
+        console.log("checkIfExists");
+        console.log(response);
+        setValidAccount(response);
     }
 
     useEffect(() => {
@@ -46,7 +58,12 @@ const Login = () => {
     //         </div>
     //     );
     // }
-
+    const signUp = async() => {
+        await AccountManager.methods.accountSignUp().send({
+            from: currentAddress
+        });
+        checkIfExists(currentAddress);
+    }
 
     const goToMail = () => {
         navigate("/mail/inbox");
@@ -54,7 +71,7 @@ const Login = () => {
 
     return (
             <div>
-                {currentAddress && 
+                {currentAddress && validAccount &&
                     <>
                     <div class = "p-12 d-flex justify-content-center mx-5 my-5">
                         <span class="py-1 px-1">Connected with </span>
@@ -62,6 +79,16 @@ const Login = () => {
                     </div>
                     <div class = "p-12 d-flex justify-content-center">
                         <button class="btn btn-sm btn-primary mx-1" data-original-title="" title="" onClick={()=>(goToMail())}> Go to Inbox <BsCaretRightFill/></button>
+                    </div>
+                    </>
+                    }
+                {currentAddress && !validAccount &&
+                    <>
+                    <div class = "p-12 d-flex justify-content-center mx-5 my-5">
+                        <span class="py-1 px-1">You do not have an account </span>
+                    </div>
+                    <div class = "p-12 d-flex justify-content-center">
+                        <button class="btn btn-sm btn-primary mx-1" data-original-title="" title="" onClick={()=>(signUp())}> Sign Up <BsCaretRightFill/></button>
                     </div>
                     </>
                     }

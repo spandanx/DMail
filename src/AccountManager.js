@@ -1,7 +1,7 @@
 import web3 from './web3';
 // const { abi, evm } = require('./compile');
 
-const address = "0x77c61d388EcA9fc021Cd6551c2Eb91f6230a0489";
+const address = "0xD7f21148dEbF9bA542E89CAE8cf71785B08d22a0";
 
 console.log(address);
 
