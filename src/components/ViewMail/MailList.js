@@ -130,7 +130,7 @@ const MailList = (props) => {
     // this.setState({openedMail:event});
     // console.log("calling viewMail()");
     // console.log(event);
-    navigate("/mail/view-mail", {state: {mailAddress:event.mailAddress}});
+    navigate("/mail/view-mail", {state: {mailAddress:event.mailAddress, enableReply:false}});
   }
 
   // const resetMail = async() => {
@@ -145,9 +145,20 @@ const MailList = (props) => {
     console.log(d);
     // var d = new Date();
     let datestring = "";
+
+    let hour = ""+d.getHours();
+    let minute = ""+d.getMinutes();
+    if (hour.length==1){
+        hour = "0"+hour;
+    }
+    if (minute.length==1){
+        minute = "0"+minute;
+    }
+    // datestring = d.getDate()  + "-" + (d.getMonth()+1) + "-" + d.getFullYear() + " " +
+    //     hour + ":" + minute;
     
     if (d.getDate()===now.getDate() && d.getMonth()===now.getMonth() && d.getFullYear()===now.getFullYear()){
-        datestring = d.getHours() + ":" + d.getMinutes();
+        datestring = hour + ":" + minute;
     }
     else if(d.getDate()<now.getDate() && d.getMonth()===now.getMonth() && d.getFullYear()===now.getFullYear()){
         console.log(months);

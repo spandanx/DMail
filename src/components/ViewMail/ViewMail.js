@@ -50,7 +50,8 @@ const ViewMail = (props) => {
         setMailAddress(location.state.mailAddress);
         fetchBasicDetails(location.state.mailAddress);
         fetchAdvancedDetails(location.state.mailAddress);
-    }, [location.state.mailAddress]);
+        // setReplying(location.state.enableReply);
+    }, [location.state.mailAddress]);//, location.state.enableReply
 
     // const getCurrentAccountAddress = () => {
         
@@ -334,7 +335,7 @@ const getMailSubcomponent = (mailBasic, mailAdvanced, index) => {
                                 {replying ? 
                                 <div class="border border-dark my-3">
                                     <button onClick={()=>disableReply()} class="btn btn-sm btn-danger float-end" data-original-title="" title=""><BsTrashFill/> Delete</button>
-                                    <ComposeMail mail={replyMail}/>
+                                    <ComposeMail mail={replyMail} redirect={"/mail/view-mail"} mailAddress={location.state.mailAddress} closeButton={disableReply} />
                                 </div>
                                 : ''}
                             </div>

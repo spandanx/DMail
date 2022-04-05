@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 // import { useWeb3React } from "@web3-react/core"
 import {Link, useNavigate} from "react-router-dom";
+import Notification from './Notification';
 
 const TopNavBar =() => {
   
@@ -35,15 +36,18 @@ const TopNavBar =() => {
 
   // render() {
     return (
-      <Link to="/" className="text-decoration-none">
-        <nav className="navbar navbar-light bg-light">
-            <div className="container-fluid">
-                <a className="navbar-brand">DMail</a>
-                {/* <span className="navbar-brand">{web3.eth.accounts[0]}</span> */}
-                {/* <a href="/login" className="navbar-brand">Logout</a> */}
-            </div>
-        </nav>
-      </Link>
+      <div>
+        <Notification/>
+        <Link to="/" className="text-decoration-none">
+          <nav className="navbar navbar-light bg-light">
+              <div className="container-fluid">
+                  <a className="navbar-brand">DMail</a>
+                  {/* <span className="navbar-brand">{web3.eth.accounts[0]}</span> */}
+                  {/* <a href="/login" className="navbar-brand">Logout</a> */}
+              </div>
+          </nav>
+        </Link>
+      </div>
     );
   // }
 }
