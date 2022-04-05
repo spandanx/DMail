@@ -235,7 +235,7 @@ const provideAllNestedMails = () => {
 const getMailSubcomponent = (mailBasic, mailAdvanced, index) => {
     if (mailBasic && mailAdvanced){
     return (
-        <div class="border border-dark">
+        <div class="border-bottom border-dark mx-2">
         <div class="heading-inbox row my-4">
                                 <div class="col-md-4 text-end">
                                     <p class="date">{getTime(mailBasic.timestamp)}</p>
@@ -264,7 +264,6 @@ const getMailSubcomponent = (mailBasic, mailAdvanced, index) => {
                             <div class="view-mail my-4">
                                 {mailBasic.body}
                             </div>
-                            {/* <hr/> */}
         </div>
     );
     }
