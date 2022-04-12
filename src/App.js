@@ -16,9 +16,8 @@ import InboxComponent from './components/Mail/Inbox';
 import SentComponent from './components/Mail/Sent';
 import DraftsComponent from './components/Mail/Drafts';
 import OutboxComponent from './components/Mail/Outbox';
-// import HomeComponent from './components/Home';
-import NavigateButtonComponent from './components/NavigateButtonComponent';
 import Login from './components/Login';
+import HomeComponent from './components/HomeComponent';
 // import { useState } from "react";
 
 import {
@@ -34,9 +33,13 @@ function App() {
 
   // const navigate = useNavigate();
 
-  const tabs = [0,1,2,3,4];
-  const paths = ["/mail/compose","/mail/inbox","/mail/sent","/mail/drafts","/mail/outbox"];
-  const texts = ["Compose","Inbox","Sent","Drafts","Outbox"];
+  // const tabs = [0,1,2,3,4];
+  // const paths = ["/mail/compose","/mail/inbox","/mail/sent","/mail/drafts","/mail/outbox"];
+  // const texts = ["Compose","Inbox","Sent","Drafts","Outbox"];
+
+  // const navigate = useNavigate();
+
+  // const [loggedIn, setLoggedIn] = useState(false);
 
 //   constructor(props) {
 //     super(props);
@@ -81,6 +84,49 @@ function App() {
   // const getActiveTab = () => {
   //   return sessionStorage.getItem("activeTab");
   // }
+  // window.ethereum.on('accountsChanged', function (accounts) {
+  //   console.log("Account Changed");
+  //   console.log(accounts);
+  //   web3.eth.getAccounts(function(err, accounts){
+  //     if (err != null){
+  //       console.error("An error occurred: "+err);
+  //       setLoggedIn(false);
+  //     }
+  //     else if (accounts.length == 0){
+  //       console.log("User is not logged in to MetaMask");
+  //       setLoggedIn(false);
+  //     }
+  //     else{
+  //       console.log("User is logged in to MetaMask");
+  //       setLoggedIn(true);
+  //     }
+  //   });
+  // });
+
+  // web3.eth.getAccounts(function(err, accounts){
+  //   if (err != null){
+  //     console.error("An error occurred: "+err);
+  //     setLoggedIn(false);
+  //   }
+  //   else if (accounts.length == 0){
+  //     console.log("User is not logged in to MetaMask");
+  //     setLoggedIn(false);
+  //   }
+  //   else{
+  //     console.log("User is logged in to MetaMask");
+  //     setLoggedIn(true);
+  //   }
+  // });
+
+  // const HomeComp = () => {
+  //   return (
+  //     <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+  //           {tabs.map((index)=>(
+  //             <NavigateButtonComponent index={index} path={paths[index]} text={texts[index]}></NavigateButtonComponent>
+  //           ))}
+  //       </div>
+  //   );
+  // }
 
   const check = () => {
     if (sessionStorage.getItem("activeTab")){
@@ -99,18 +145,26 @@ function App() {
       <>
       <Router>
       <TopNavBar/>
+
+      <Routes>
+          <Route exact path="/login" element={<Login />}/>
+        </Routes>
+
       <div class="d-flex align-items-start mt-2">
-        <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+        {/* <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
             {tabs.map((index)=>(
               <NavigateButtonComponent index={index} path={paths[index]} text={texts[index]}></NavigateButtonComponent>
             ))}
-              {/* <NavigateButtonComponent path={"/compose"} text={"Compose"}></NavigateButtonComponent>
-              <NavigateButtonComponent path={"/inbox"} text={"Inbox"}></NavigateButtonComponent>
-              <button class={"nav-link " + (activeTab==2 ? 'active' : '')} id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false">Sent</button>
-              <button class={"nav-link " + (activeTab==3 ? 'active' : '')} id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false">Drafts</button>
-              <button class={"nav-link " + (activeTab==4 ? 'active' : '')} id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-settings" type="button" role="tab" aria-controls="v-pills-settings" aria-selected="false">Outbox</button> */}
-        </div>
-      <div class="tab-content w-auto" id="v-pills-tabContent">
+        </div> */}
+        {/* {!loggedIn && 
+          <div>
+            <div class = "p-12 d-flex justify-content-center mx-5 my-5">
+              <span class="py-1 px-1"><h4>You are not logged in!</h4></span>
+              <span class="py-1 px-1"><h4>Please connect a wallet to login.</h4></span>
+            </div>
+          </div>
+        } */}
+      {/* <div class="tab-content w-auto" id="v-pills-tabContent"> */}
         {/* <div class={"tab-pane fade " + (this.state.activeTab==0 ? '' : '')} id="v-pills-compose" role="tabpanel" aria-labelledby="v-pills-compose-tab">
           <ComposeMail></ComposeMail>
         </div>
@@ -126,16 +180,17 @@ function App() {
         <div class={"tab-pane fade " + (this.state.activeTab==4 ? '' : '')} id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
           <OutboxComponent/>
         </div> */}
-      </div>
+      {/* </div> */}
       <Routes>
-          {/* <Route path="/" element={<HomeComponent />}/> */}
-          <Route path="/login" element={<Login />}/>
-          <Route path="/mail/compose" element={<ComposeMail />}/>
-          <Route path="/mail/inbox" element={<InboxComponent />}/>
-          <Route path="/mail/sent" element={<SentComponent />}/>
-          <Route path="/mail/drafts" element={<DraftsComponent />}/>
-          <Route path="/mail/outbox" element={<OutboxComponent />}/>
-          <Route path="/mail/view-mail" element={<ViewMail/>} />
+          <Route path="/" element={<Login/>}/>
+          {/* <Route path="/login" element={<Login />}/> */}
+          {/* <Route path="/mail/*" element={HomeComp()} /> */}
+          <Route path="/mail/compose" element={<><HomeComponent /><ComposeMail/></>}/>
+          <Route path="/mail/inbox" element={<><HomeComponent /><InboxComponent /></>}/>
+          <Route path="/mail/sent" element={<><HomeComponent /><SentComponent /></>}/>
+          <Route path="/mail/drafts" element={<><HomeComponent /><DraftsComponent /></>}/>
+          <Route path="/mail/outbox" element={<><HomeComponent /><OutboxComponent /></>}/>
+          <Route path="/mail/view-mail" element={<><HomeComponent /><ViewMail/></>} />
           {/* <Route path="/">
             <Users />
           </Route> */}

@@ -237,33 +237,33 @@ const getMailSubcomponent = (mailBasic, mailAdvanced, index) => {
     return (
         <div class="border-bottom border-dark mx-2">
         <div class="heading-inbox row my-4">
-                                <div class="col-md-4 text-end">
-                                    <p class="date">{getTime(mailBasic.timestamp)}</p>
-                                </div>
-                                <div class="col-md-12">
-                                    <h4> {mailBasic.subject}</h4>
-                                </div>
-                            </div>
-                            <hr/>
-                            <div class="sender-info">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <strong>{"<"+mailAdvanced?.from+">"}</strong>
-                                        <span> </span>
-                                        <div>
-                                            to
-                                            <strong> me</strong>
-                                            <DropDown mailBasic={mailBasic} mailAdvanced={mailAdvanced}></DropDown>
-                                        </div>
-                                        <a class="sender-dropdown " href="javascript:;">
-                                            <i class="fa fa-chevron-down"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="view-mail my-4">
-                                {mailBasic.body}
-                            </div>
+                <div class="col-md-4 text-end">
+                    <p class="date">{getTime(mailBasic.timestamp)}</p>
+                </div>
+                <div class="col-md-12">
+                    <h4> {mailBasic.subject}</h4>
+                </div>
+            </div>
+            <hr/>
+            <div class="sender-info">
+                <div class="row">
+                    <div class="col-md-12">
+                        <strong>{"<"+mailAdvanced?.from+">"}</strong>
+                        <span> </span>
+                        <div>
+                            to
+                            <strong> me</strong>
+                            <DropDown mailBasic={mailBasic} mailAdvanced={mailAdvanced}></DropDown>
+                        </div>
+                        <a class="sender-dropdown " href="javascript:;">
+                            <i class="fa fa-chevron-down"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="view-mail my-4">
+                {mailBasic.body}
+            </div>
         </div>
     );
     }

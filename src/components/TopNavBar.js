@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 // import { useWeb3React } from "@web3-react/core"
 import {Link, useNavigate} from "react-router-dom";
 import Notification from './Notification';
+import web3 from '../web3';
 
 const TopNavBar =() => {
   
@@ -12,6 +13,11 @@ const TopNavBar =() => {
   //   this.state = {
   //   };
   // }
+  web3.eth.getAccounts(function(err, accounts){
+    if (err != null) console.error("An error occurred: "+err);
+    else if (accounts.length == 0) console.log("User is not logged in to MetaMask");
+    else console.log("User is logged in to MetaMask");
+  });
 
   window.ethereum.on('accountsChanged', function (accounts) {
     console.log("Account Changed");
@@ -38,7 +44,7 @@ const TopNavBar =() => {
     return (
       <div>
         <Notification/>
-        <Link to="/" className="text-decoration-none">
+        <Link to="/login" className="text-decoration-none">
           <nav className="navbar navbar-light bg-light">
               <div className="container-fluid">
                   <a className="navbar-brand">DMail</a>

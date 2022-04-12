@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 
-class LeftNavBar extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-    };
-  }
+const LeftNavBar = () => {
+// class LeftNavBar extends Component {
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+  //   };
+  // }
 
-  render() {
+  // render() {
     return (
         <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
             {/* <button class="nav-link active" id="v-pills-Inbox-tab" data-bs-toggle="pill" data-bs-target="#v-pills-Inbox" type="button" role="tab" aria-controls="v-pills-Inbox" aria-selected="true">Inbox</button> */}
@@ -18,7 +19,7 @@ class LeftNavBar extends Component {
             <button class="nav-link" id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-settings" type="button" role="tab" aria-controls="v-pills-settings" aria-selected="false">Outbox</button>
       </div>
     );
-  }
+  // }
 }
 
 export default LeftNavBar;
