@@ -94,7 +94,7 @@ const Login = () => {
                     }
                 {!currentAddress && 
                 <div class = "p-12 d-flex justify-content-center mx-5 my-5">
-                    <span class="py-1 px-1"><h4>You have been logged out.</h4></span>
+                    <span class="py-1 px-1"><h4>You are not logged in! Please connect through a wallet.</h4></span>
                 </div>
                 }
             </div>

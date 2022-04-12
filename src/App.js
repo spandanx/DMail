@@ -147,7 +147,7 @@ function App() {
       <TopNavBar/>
 
       <Routes>
-          <Route exact path="/login" element={<Login />}/>
+          <Route path="/login" element={<Login />}/>
         </Routes>
 
       <div class="d-flex align-items-start mt-2">
