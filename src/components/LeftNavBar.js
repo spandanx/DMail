@@ -1,12 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect } from 'react';
 
 const LeftNavBar = () => {
 // class LeftNavBar extends Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //   };
-  // }
+
+  // useEffect(() => {
+  //   setActiveTab(sessionStorage.getItem('activeTab'));
+  // },[sessionStorage.getItem('activeTab')]);
 
   // render() {
     return (

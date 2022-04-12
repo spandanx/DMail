@@ -301,7 +301,6 @@ contract AccountManager {
 
     }
 
-
     // function checkIfValidAccountAddress(address addr) public view returns(bool){
     //     return (address(accounts[addr])!=address(0));
     // }

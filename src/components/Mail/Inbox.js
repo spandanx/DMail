@@ -7,9 +7,16 @@ class InboxComponent extends Component {
     this.state = {
     };
   }
+  componentDidMount() {
+    console.log("InboxComponent componentDidMount()");
+    sessionStorage.setItem("activeTab", 1);
+  }
+  componentDidUpdate() {
+    console.log("InboxComponent componentDidUpdate()");
+    sessionStorage.setItem("activeTab", 1);
+  }
 
   render() {
-    sessionStorage.setItem("activeTab", 1);
     return (
         <MailList mailType={"Inbox"}/>
     );
