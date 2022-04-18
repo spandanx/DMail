@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.7;
 
+// import "hardhat/console.sol";
 // import {DMail} from "dmail.sol";
 contract MailObj{
     struct MailBasic{
@@ -251,6 +252,7 @@ contract AccountManager {
             string memory typeOfMail, address referenceMail,
             address[] memory to, address[] memory cc, address[] memory bcc
             ) public{
+        // console.log("calling sendMail");
         address sender = msg.sender;
         require(address(accounts[sender])!=address(0), "Sender not found");
         // string message = string(bytes.concat(bytes("Reciever address"), "-", bytes(" not found")));
