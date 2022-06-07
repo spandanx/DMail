@@ -117,10 +117,8 @@ const ViewMail = (props) => {
       AccountManager.methods.getMailBasicByAddress(address).call().then(function(response) {
         console.log("HERE IS THE RESULT");
         console.log(response);
-        // basicDetails = response;
         basic.push(response);
         setNestedBasicMails(basic);
-        
       });
       let advancedDetails = "";
       AccountManager.methods.getMailAdvancedByAddress(address).call().then(function(response) {
